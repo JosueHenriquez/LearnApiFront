@@ -6,6 +6,7 @@ import IntegracionBackFront.backfront.Models.DTO.Categories.CategoryDTO;
 import IntegracionBackFront.backfront.Services.Categories.CategoryService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.Instant;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -26,15 +26,31 @@ public class CategoryController {
     private CategoryService service;
 
     @GetMapping("/getDataCategory")
-    private List<CategoryDTO> getData(){
-        return service.getAllCategories();
+    private ResponseEntity<Page<CategoryDTO>> getData(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size
+    ) {
+        if (size <= 0 || size > 50) {
+            ResponseEntity.badRequest().body(Map.of(
+                    "status", "El tamaño de la página debe estar entre 1 y 50"
+            ));
+            return ResponseEntity.ok(null);
+        }
+
+        Page<CategoryDTO> categories = service.getAllCategories(page, size);
+        if (categories == null) {
+            ResponseEntity.badRequest().body(Map.of(
+                    "status", "No hay categorías registradas"
+            ));
+        }
+        return ResponseEntity.ok(categories);
     }
 
     @PostMapping("/newCategory")
-    private ResponseEntity<Map<String, Object>> inserCategory(@Valid @RequestBody CategoryDTO json, HttpServletRequest request){
-        try{
-            CategoryDTO response =service.insert(json);
-            if (response == null){
+    private ResponseEntity<Map<String, Object>> inserCategory(@Valid @RequestBody CategoryDTO json, HttpServletRequest request) {
+        try {
+            CategoryDTO response = service.insert(json);
+            if (response == null) {
                 return ResponseEntity.badRequest().body(Map.of(
                         "Error", "Inserción incorrecta",
                         "Estatus", "Inserción incorrecta",
@@ -42,10 +58,10 @@ public class CategoryController {
                 ));
             }
             return ResponseEntity.status(HttpStatus.CREATED).body(Map.of(
-                "Estado", "Completado",
-                "data", response
+                    "Estado", "Completado",
+                    "data", response
             ));
-        }catch (Exception e){
+        } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(Map.of(
                             "status", "error",
@@ -59,24 +75,22 @@ public class CategoryController {
     public ResponseEntity<?> modificarUsuario(
             @PathVariable Long id,
             @Valid @RequestBody CategoryDTO usuario,
-            BindingResult bindingResult){
-        if (bindingResult.hasErrors()){
+            BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
             Map<String, String> errores = new HashMap<>();
             bindingResult.getFieldErrors().forEach(error ->
                     errores.put(error.getField(), error.getDefaultMessage()));
             return ResponseEntity.badRequest().body(errores);
         }
 
-        try{
+        try {
             CategoryDTO usuarioActualizado = service.update(id, usuario);
             return ResponseEntity.ok(usuarioActualizado);
-        }
-        catch (ExceptionCategoryNotFound e){
+        } catch (ExceptionCategoryNotFound e) {
             return ResponseEntity.notFound().build();
-        }
-        catch (ExceptionColumnDuplicate e){
+        } catch (ExceptionColumnDuplicate e) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(
-                    Map.of("error", "Datos duplicados","campo", e.getColumnDuplicate())
+                    Map.of("error", "Datos duplicados", "campo", e.getColumnDuplicate())
             );
         }
     }

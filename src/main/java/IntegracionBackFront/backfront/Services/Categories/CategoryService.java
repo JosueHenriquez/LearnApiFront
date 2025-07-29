@@ -8,10 +8,11 @@ import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -20,11 +21,11 @@ public class CategoryService {
     @Autowired
     private CategoryRepository repo;
 
-    public List<CategoryDTO> getAllCategories() {
-        List<CategoryEntity> list = repo.findAll();
-        return list.stream()
-                .map(this::convertirADTO)
-                .collect(Collectors.toList());
+    public Page<CategoryDTO> getAllCategories(int page, int size) {
+        //Crear las páginas con los valroes de los parametros
+        Pageable pageable = PageRequest.of(page, size);
+        Page<CategoryEntity> pageEntity = repo.findAll(pageable);
+        return pageEntity.map(this::convertirADTO);
     }
 
     public CategoryDTO insert(@Valid CategoryDTO jsonData) {
