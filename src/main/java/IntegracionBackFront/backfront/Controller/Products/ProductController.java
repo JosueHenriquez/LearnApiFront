@@ -29,7 +29,7 @@ public class ProductController {
     @GetMapping("/getDataProducts")
     private ResponseEntity<Page<ProductDTO>> getProducts(
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "3") int size){
+            @RequestParam(defaultValue = "10") int size){
         if (size <= 0 || size > 50){
             ResponseEntity.badRequest().body(Map.of(
                     "status", "El tamaño de la página debe estar entre 1 y 50"

@@ -7,6 +7,7 @@ import IntegracionBackFront.backfront.Services.Categories.CategoryService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -26,8 +27,24 @@ public class CategoryController {
     private CategoryService service;
 
     @GetMapping("/getDataCategory")
-    private List<CategoryDTO> getData(){
-        return service.getAllCategories();
+    private ResponseEntity<Page<CategoryDTO>> getData(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "3") int size
+    ){
+        if (size <= 0 || size > 50){
+            ResponseEntity.badRequest().body(Map.of(
+                    "status", "El tamaño de la página debe estar entre 1 y 50"
+            ));
+            return ResponseEntity.ok(null);
+        }
+
+        Page<CategoryDTO> categories = service.getAllCategories(page, size);
+        if (categories == null){
+            ResponseEntity.badRequest().body(Map.of(
+                    "status", "No hay categorias registradas"
+            ));
+        }
+        return ResponseEntity.ok(categories);
     }
 
     @PostMapping("/newCategory")
