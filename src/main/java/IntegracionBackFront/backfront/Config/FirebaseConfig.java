@@ -37,7 +37,7 @@ public class FirebaseConfig {
                         "\"auth_provider_x509_cert_url\":\"%s\"," +
                         "\"client_x509_cert_url\":\"%s\"}",
                 System.getenv("FIREBASE_TYPE"),
-                System.getenv("FIREBASE_PROJECT_ID"), // Nombre consistente
+                System.getenv("FIREBASE_PROJECT_ID"),
                 System.getenv("FIREBASE_PRIVATE_KEY_ID"),
                 privateKey,
                 System.getenv("FIREBASE_CLIENT_EMAIL"),
