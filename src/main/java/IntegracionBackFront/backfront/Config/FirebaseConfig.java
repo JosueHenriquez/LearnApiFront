@@ -17,6 +17,7 @@ public class FirebaseConfig {
     public void init() throws IOException {
         // Opción 1: Usar variables de entorno (recomendado para producción)
         if (System.getenv("FIREBASE_PRIVATE_KEY") != null) {
+            System.out.println("Entre a las variables de Heroku");
             initFromEnvVars();
         }
         // Opción 2: Usar archivo JSON (solo para desarrollo)
@@ -50,7 +51,7 @@ public class FirebaseConfig {
         FirebaseOptions options = FirebaseOptions.builder()
                 .setCredentials(GoogleCredentials.fromStream(
                         new ByteArrayInputStream(firebaseConfig.getBytes())))
-                .setStorageBucket(System.getenv("uploadspringimages.firebasestorage.app"))
+                .setStorageBucket(System.getenv("FIREBASE_STORAGE_BUCKET"))
                 .build();
 
         FirebaseApp.initializeApp(options);
@@ -69,7 +70,7 @@ public class FirebaseConfig {
 
         FirebaseOptions options = FirebaseOptions.builder()
                 .setCredentials(GoogleCredentials.fromStream(serviceAccount))
-                .setStorageBucket("uploadspringimages.appspot.com") // Usa el formato correcto
+                .setStorageBucket(System.getenv("FIREBASE_STORAGE_BUCKET"))
                 .build();
 
         FirebaseApp.initializeApp(options);
