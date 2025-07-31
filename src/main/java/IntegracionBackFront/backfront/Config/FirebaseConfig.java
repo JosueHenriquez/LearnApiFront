@@ -57,8 +57,11 @@ public class FirebaseConfig {
     }
 
     private void initFromJsonFile() throws IOException {
+//        InputStream serviceAccount = getClass().getClassLoader()
+//                .getResourceAsStream("uploadspringimages-firebase-adminsdk-fbsvc-3af60a4524.json");
+
         InputStream serviceAccount = getClass().getClassLoader()
-                .getResourceAsStream("uploadspringimages-firebase-adminsdk-fbsvc-3af60a4524.json");
+                .getResourceAsStream("firebase-config.json");
 
         if (serviceAccount == null) {
             throw new IOException("Archivo JSON no encontrado en resources");
