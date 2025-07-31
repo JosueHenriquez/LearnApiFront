@@ -58,8 +58,6 @@ public class FirebaseConfig {
     }
 
     private void initFromJsonFile() throws IOException {
-//        InputStream serviceAccount = getClass().getClassLoader()
-//                .getResourceAsStream("uploadspringimages-firebase-adminsdk-fbsvc-3af60a4524.json");
 
         InputStream serviceAccount = getClass().getClassLoader()
                 .getResourceAsStream("firebase-config.json");
