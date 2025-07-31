@@ -20,6 +20,25 @@ public class FirebaseConfig {
      */
     @PostConstruct
     public void init() throws Exception {
+
+        String privateKey = System.getenv("FIREBASE_PRIVATE_KEY");
+
+        String firebaseConfig = String.format(
+                "{\"type\":\"%s\",\"project_id\":\"%s\",\"private_key_id\":\"%s\",\"private_key\":\"%s\"," +
+                        "\"client_email\":\"%s\",\"client_id\":\"%s\",\"auth_uri\":\"%s\",\"token_uri\":\"%s\"," +
+                        "\"auth_provider_x509_cert_url\":\"%s\",\"client_x509_cert_url\":\"%s\"}",
+                System.getenv("FIREBASE_TYPE"),
+                System.getenv("project_id"),
+                System.getenv("private_key_id"),
+                privateKey.replace("\n", "\\n"),
+                System.getenv("client_email"),
+                System.getenv("client_id"),
+                System.getenv("auth_uri"),
+                System.getenv("token_uri"),
+                System.getenv("auth_provider_x509_cert_url"),
+                System.getenv("client_x509_cert_url")
+        );
+
         // 1. Cargar archivo JSON (sin src/main/resources)
         InputStream serviceAccount = getClass().getClassLoader().getResourceAsStream(
                 "uploadspringimages-firebase-adminsdk-fbsvc-3af60a4524.json"
