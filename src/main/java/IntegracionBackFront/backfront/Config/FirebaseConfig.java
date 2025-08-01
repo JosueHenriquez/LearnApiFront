@@ -3,6 +3,8 @@ package IntegracionBackFront.backfront.Config;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Configuration;
 
 import javax.annotation.PostConstruct;
@@ -13,16 +15,28 @@ import java.io.InputStream;
 @Configuration
 public class FirebaseConfig {
 
+    private static final Logger logger = LoggerFactory.getLogger(FirebaseConfig.class);
+
     @PostConstruct
     public void init() throws IOException {
-        // Opción 1: Usar variables de entorno (recomendado para producción)
-        if (System.getenv("FIREBASE_PRIVATE_KEY") != null) {
-            System.out.println("Entre a las variables de Heroku");
-            initFromEnvVars();
+        //Verificar si Firebase ya esta inicializado
+        if (!FirebaseApp.getApps().isEmpty()){
+            logger.info("Firebase ya esta inicializado");
+            return;
         }
-        // Opción 2: Usar archivo JSON (solo para desarrollo)
-        else {
-            initFromJsonFile();
+        try{
+            // Opción 1: Usar variables de entorno (recomendado para producción)
+            if(System.getenv("FIREBASE_PRIVATE_KEY") != null) {
+                logger.info("Inicializando Firebase desde variables de entorno heroku");
+                initFromEnvVars();
+            }else{
+                // Opción 2: Usar archivo JSON (solo para desarrollo)
+                logger.info("Inicializando Firebase desde archivo local .json");
+                initFromJsonFile();
+            }
+        }catch (IOException e){
+            logger.error("Error inicializando Firebase." + e.getMessage());
+            throw new RuntimeException("Error inicializando Firebase");
         }
     }
 
@@ -58,9 +72,8 @@ public class FirebaseConfig {
     }
 
     private void initFromJsonFile() throws IOException {
-
         InputStream serviceAccount = getClass().getClassLoader()
-                .getResourceAsStream("firebase-config.json");
+                .getResourceAsStream("uploadspringimages-firebase-adminsdk-fbsvc-3af60a4524.json");
 
         if (serviceAccount == null) {
             throw new IOException("Archivo JSON no encontrado en resources");
@@ -68,7 +81,7 @@ public class FirebaseConfig {
 
         FirebaseOptions options = FirebaseOptions.builder()
                 .setCredentials(GoogleCredentials.fromStream(serviceAccount))
-                .setStorageBucket(System.getenv("FIREBASE_STORAGE_BUCKET"))
+                .setStorageBucket("uploadspringimages.firebasestorage.app")
                 .build();
 
         FirebaseApp.initializeApp(options);
