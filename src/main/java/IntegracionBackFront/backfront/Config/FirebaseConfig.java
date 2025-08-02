@@ -1,5 +1,6 @@
 package IntegracionBackFront.backfront.Config;
 
+import IntegracionBackFront.backfront.Utils.Envars;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
@@ -73,7 +74,7 @@ public class FirebaseConfig {
 
     private void initFromJsonFile() throws IOException {
         InputStream serviceAccount = getClass().getClassLoader()
-                .getResourceAsStream("uploadspringimages-firebase-adminsdk-fbsvc-3af60a4524.json");
+                .getResourceAsStream(Envars.file_json);
 
         if (serviceAccount == null) {
             throw new IOException("Archivo JSON no encontrado en resources");
@@ -81,7 +82,7 @@ public class FirebaseConfig {
 
         FirebaseOptions options = FirebaseOptions.builder()
                 .setCredentials(GoogleCredentials.fromStream(serviceAccount))
-                .setStorageBucket("uploadspringimages.firebasestorage.app")
+                .setStorageBucket(Envars.bucket)
                 .build();
 
         FirebaseApp.initializeApp(options);
