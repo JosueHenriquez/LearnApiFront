@@ -16,22 +16,13 @@ public class BackfrontApplication{
 
 	static void loadEnvVariables(){
 		//Codigo para cargar los valores del archivo .env sobre el archivo application.properties
-		Dotenv dotenv = Dotenv.configure().
-				ignoreIfMissing().
-				load();
+		Dotenv dotenv = Dotenv.configure()
+				.ignoreIfMissing()
+				.load();
 
 		//Carga de todas las variables en application.properties
 		dotenv.entries().forEach(entry ->
 				System.setProperty(entry.getKey(), entry.getValue())
 		);
-
-		//Cargar variable del bucket
-		Envars.bucket = dotenv.get("BUCKET");
-		Envars.file_json = dotenv.get("FILE_JSON");
-		if (Envars.bucket == null || Envars.bucket.isBlank() || Envars.file_json == null || Envars.file_json.isEmpty()){
-			throw new IllegalStateException("FIREBASE_BUCKET o el Archivo.json no esta configurado en .env.");
-		}
-
 	}
-
 }
