@@ -26,8 +26,13 @@ public class CategoryController {
     @Autowired
     private CategoryService service;
 
-    /*
-    @GetMapping("/getDataCategory")
+    /**
+     * Metodo obtiene categorias paginadas
+     * @param page
+     * @param size
+     * @return
+     */
+    @GetMapping("/getDataCategory-paginado")
     private ResponseEntity<Page<CategoryDTO>> getData(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "3") int size
@@ -39,15 +44,19 @@ public class CategoryController {
             return ResponseEntity.ok(null);
         }
 
-        Page<CategoryDTO> categories = service.getAllCategories(page, size);
+        Page<CategoryDTO> categories = service.getAllCategories_paginado(page, size);
         if (categories == null){
             ResponseEntity.badRequest().body(Map.of(
                     "status", "No hay categorias registradas"
             ));
         }
         return ResponseEntity.ok(categories);
-    }*/
+    }
 
+    /**
+     * Metodo obtiene categorias SIN paginación
+     * @return
+     */
     @GetMapping("/getDataCategory")
     private ResponseEntity<List<CategoryDTO>> getData(){
         List<CategoryDTO> categories = service.getAllCategories();
