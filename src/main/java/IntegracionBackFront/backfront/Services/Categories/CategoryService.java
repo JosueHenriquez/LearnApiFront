@@ -23,12 +23,26 @@ public class CategoryService {
     @Autowired
     private CategoryRepository repo;
 
+    //Metodo de paginación
+    /*
     public Page<CategoryDTO> getAllCategories(int page, int size) {
         //Crear las páginas con los valores de los parámetros
         Pageable pageable = PageRequest.of(page, size);
         //Guardamos los datos en la pagina pageable
         Page<CategoryEntity> pageEntity = repo.findAll(pageable);
         return pageEntity.map(this::convertirADTO);
+    }*/
+
+    /**
+     * Metodo sin paginación
+     * @return
+     */
+    public List<CategoryDTO> getAllCategories() {
+        //Guardamos los datos en la pagina pageable
+        List<CategoryEntity> ListEntity = repo.findAll();
+        return ListEntity.stream()
+                .map(this::convertirADTO)
+                .collect(Collectors.toList());
     }
 
     public CategoryDTO insert(@Valid CategoryDTO jsonData) {

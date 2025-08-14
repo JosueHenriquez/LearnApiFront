@@ -26,6 +26,7 @@ public class CategoryController {
     @Autowired
     private CategoryService service;
 
+    /*
     @GetMapping("/getDataCategory")
     private ResponseEntity<Page<CategoryDTO>> getData(
             @RequestParam(defaultValue = "0") int page,
@@ -39,6 +40,17 @@ public class CategoryController {
         }
 
         Page<CategoryDTO> categories = service.getAllCategories(page, size);
+        if (categories == null){
+            ResponseEntity.badRequest().body(Map.of(
+                    "status", "No hay categorias registradas"
+            ));
+        }
+        return ResponseEntity.ok(categories);
+    }*/
+
+    @GetMapping("/getDataCategory")
+    private ResponseEntity<List<CategoryDTO>> getData(){
+        List<CategoryDTO> categories = service.getAllCategories();
         if (categories == null){
             ResponseEntity.badRequest().body(Map.of(
                     "status", "No hay categorias registradas"
