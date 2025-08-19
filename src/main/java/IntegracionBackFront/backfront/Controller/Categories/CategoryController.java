@@ -57,7 +57,7 @@ public class CategoryController {
      * Metodo obtiene categorias SIN paginación
      * @return
      */
-    @GetMapping("/getDataCategory")
+    @GetMapping("/getDataCategories")
     private ResponseEntity<List<CategoryDTO>> getData(){
         List<CategoryDTO> categories = service.getAllCategories();
         if (categories == null){

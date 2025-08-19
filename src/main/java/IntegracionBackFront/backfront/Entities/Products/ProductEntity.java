@@ -33,5 +33,6 @@ public class ProductEntity {
     private Long categoriaId;
     @Column(name = "IDUSUARIOREGISTRO")
     private int usuarioId; //Usuario que lo registro
-
+    @Column(name = "IMAGEN_URL")
+    private String imagen_url;
 }
