@@ -31,4 +31,8 @@ public class UserDTO {
 
     //Campo adicional
     private String nombreTipoUsuario;
+    /**
+     * solucionar error ya que no permite iniciar sesión porque no estoy
+     * proporcionando valores para todos los atributos.
+     */
 }

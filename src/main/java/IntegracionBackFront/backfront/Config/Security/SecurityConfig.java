@@ -1,4 +1,4 @@
-package IntegracionBackFront.backfront.Config;
+package IntegracionBackFront.backfront.Config.Security;
 
 import IntegracionBackFront.backfront.Utils.JWT.JwtCookieAuthFilter;
 import org.springframework.context.annotation.Bean;
@@ -46,4 +46,3 @@ public class SecurityConfig {
         return config.getAuthenticationManager();
     }
 }
-

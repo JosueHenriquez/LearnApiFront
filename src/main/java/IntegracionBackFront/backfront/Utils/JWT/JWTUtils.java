@@ -26,6 +26,12 @@ public class JWTUtils {
 
     private final Logger log = LoggerFactory.getLogger(JWTUtils.class);
 
+    /**
+     * Metodo para crea JWT
+     * @param id
+     * @param nombre
+     * @return
+     */
     public String create(String id, String nombre){
         //Decodifica el secreto Base64 y crea una clave HMAC-SHA segura
         SecretKey signingKey = Keys.hmacShaKeyFor(Decoders.BASE64.decode(jwtSecreto));
@@ -56,16 +62,33 @@ public class JWTUtils {
         return claims.getSubject();
     }
 
+    /**
+     * Obtine el ID del JWT
+     * @param jwt
+     * @return
+     */
     public String getKey(String jwt){
         // Parsea los claims y devuelve el ID
         Claims claims = parseClaims(jwt);
         return claims.getId();
     }
 
+    /**
+     * Parsea y valida el token
+     * @param jwt
+     * @return
+     * @throws ExpiredJwtException
+     * @throws MalformedJwtException
+     */
     public Claims parseToken(String jwt) throws ExpiredJwtException, MalformedJwtException {
         return parseClaims(jwt);
     }
 
+    /**
+     * Extraer token desde la solicitud
+     * @param request
+     * @return
+     */
     public String extractTokenFromRequest(HttpServletRequest request){
         Cookie[] cookies = request.getCookies();
         if (cookies != null){
@@ -78,6 +101,11 @@ public class JWTUtils {
         return null;
     }
 
+    /**
+     * Validación del token
+     * @param token
+     * @return
+     */
     public boolean validate(String token){
         try{
             parseClaims(token);
