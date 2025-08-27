@@ -49,7 +49,6 @@ public class ProductController {
     private ResponseEntity<Map<String, Object>> inserCategory(@Valid @RequestBody ProductDTO json, HttpServletRequest request){
         try{
             ProductDTO response =service.insert(json);
-            System.out.println("Imagen: " + json.getImagen_url());
             if (response == null){
                 return ResponseEntity.badRequest().body(Map.of(
                         "Error", "Inserción incorrecta",

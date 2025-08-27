@@ -16,9 +16,9 @@ import java.time.LocalDate;
 public class UserDTO {
 
     private Long id;
-    @NotBlank(message = "El nombre es obligatorio")
+    //Validar valores con código
     private String nombre;
-    @NotBlank(message = "El apellido es obligatorio")
+    //Validar valores con código
     private String apellido;
     @Email(message = "El correo debe tener un formato valido")
     private String correo;
@@ -31,4 +31,8 @@ public class UserDTO {
 
     //Campo adicional
     private String nombreTipoUsuario;
+    /**
+     * solucionar error ya que no permite iniciar sesión porque no estoy
+     * proporcionando valores para todos los atributos.
+     */
 }

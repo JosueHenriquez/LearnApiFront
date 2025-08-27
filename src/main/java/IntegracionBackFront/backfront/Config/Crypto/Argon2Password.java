@@ -1,4 +1,4 @@
-package IntegracionBackFront.backfront.Config.Security.Crypto;
+package IntegracionBackFront.backfront.Config.Crypto;
 
 import de.mkammerer.argon2.Argon2;
 import de.mkammerer.argon2.Argon2Factory;
