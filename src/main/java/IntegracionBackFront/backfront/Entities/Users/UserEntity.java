@@ -11,7 +11,7 @@ import java.time.LocalDate;
 
 @Entity
 @Getter @Setter
-@ToString @EqualsAndHashCode
+@EqualsAndHashCode
 @Table(name = "USUARIO")
 public class UserEntity {
 
@@ -36,7 +36,20 @@ public class UserEntity {
     @Column(name = "FECHAREGISTRO")
     private LocalDate fechaRegistro;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "IDTIPOUSUARIO", referencedColumnName = "IDTIPOUSUARIO")
     private UserTypeEntity tipoUsuario;
+
+    @Override
+    public String toString() {
+        return "UserEntity{" +
+                "apellido='" + apellido + '\'' +
+                ", id=" + id +
+                ", nombre='" + nombre + '\'' +
+                ", correo='" + correo + '\'' +
+                ", contrasena='" + contrasena + '\'' +
+                ", fechaRegistro=" + fechaRegistro +
+                ", tipoUsuario=" + tipoUsuario +
+                '}';
+    }
 }

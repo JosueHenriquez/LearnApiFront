@@ -29,10 +29,10 @@ public class JWTUtils {
     /**
      * Metodo para crea JWT
      * @param id
-     * @param nombre
+     * @param correo
      * @return
      */
-    public String create(String id, String nombre){
+    public String create(String id, String correo, String rol){
         //Decodifica el secreto Base64 y crea una clave HMAC-SHA segura
         SecretKey signingKey = Keys.hmacShaKeyFor(Decoders.BASE64.decode(jwtSecreto));
 
@@ -44,7 +44,7 @@ public class JWTUtils {
         return Jwts.builder()
                 .setId(id)                                              // ID único (JWT ID)
                 .setIssuedAt(now)                                       // Fecha de emisión
-                .setSubject(nombre)                                     // Sujeto (usuario)
+                .setSubject(correo)                                     // Sujeto (usuario)
                 .setIssuer(issuer)                                      // Emisor del token
                 .setExpiration(expiracionMs >= 0 ? expiration : null)   // Expiración (si es >= 0)
                 .signWith(signingKey, SignatureAlgorithm.HS256)         // Firma con algoritmo HS256

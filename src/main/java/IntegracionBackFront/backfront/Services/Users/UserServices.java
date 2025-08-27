@@ -18,6 +18,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Optional;
+
 @Slf4j
 @Service
 public class UserServices {
@@ -120,7 +123,11 @@ public class UserServices {
 
     // ***************** METODOS COMPLEMENTARIOS **********************
     public boolean verificarExistenciaUsuario(String email){
-        return repo.existsByCorreo(email);
+        boolean data = repo.existsByCorreo(email);
+        if (data)
+            return true;
+        else
+            return false;
     }
 
     /**

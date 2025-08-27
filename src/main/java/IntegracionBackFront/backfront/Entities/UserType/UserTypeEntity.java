@@ -1,6 +1,7 @@
 package IntegracionBackFront.backfront.Entities.UserType;
 
 import IntegracionBackFront.backfront.Entities.Users.UserEntity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -12,7 +13,7 @@ import java.util.List;
 
 @Entity
 @Getter @Setter
-@ToString @EqualsAndHashCode
+@EqualsAndHashCode
 @Table(name = "TIPOUSUARIO")
 public class UserTypeEntity {
 
@@ -28,6 +29,17 @@ public class UserTypeEntity {
     @Column(name = "DESCRIPCION")
     private String descripcion;
 
-    @OneToMany(mappedBy = "tipoUsuario", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "tipoUsuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<UserEntity> usuarios = new ArrayList<>();
+
+    @Override
+    public String toString() {
+        return "UserTypeEntity{" +
+                "descripcion='" + descripcion + '\'' +
+                ", id=" + id +
+                ", nombreTipo='" + nombreTipo + '\'' +
+                ", usuarios=" + usuarios +
+                '}';
+    }
 }

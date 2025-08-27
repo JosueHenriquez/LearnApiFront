@@ -16,9 +16,9 @@ import java.time.LocalDate;
 public class UserDTO {
 
     private Long id;
-    @NotBlank(message = "El nombre es obligatorio")
+    //Validar valores con código
     private String nombre;
-    @NotBlank(message = "El apellido es obligatorio")
+    //Validar valores con código
     private String apellido;
     @Email(message = "El correo debe tener un formato valido")
     private String correo;

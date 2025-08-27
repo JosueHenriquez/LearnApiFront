@@ -1,5 +1,6 @@
 package IntegracionBackFront.backfront.Controller.Auth;
 
+import IntegracionBackFront.backfront.Models.DTO.Auth.AuthenticationDTO;
 import IntegracionBackFront.backfront.Models.DTO.Users.UserDTO;
 import IntegracionBackFront.backfront.Services.Auth.AuthService;
 import IntegracionBackFront.backfront.Utils.JWT.JWTUtils;
@@ -7,7 +8,6 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,6 +26,7 @@ public class AuthController {
 
     @PostMapping("/login")
     private ResponseEntity<String> login (@Valid @RequestBody UserDTO data, HttpServletRequest request, HttpServletResponse response){
+        System.out.println("Método controller");
         //1. Se valida que los datos no estén vacíos
         if ((data.getCorreo().isEmpty() || data.getCorreo().isBlank() ||
             data.getContrasena().isEmpty() || data.getContrasena().isBlank())){
@@ -35,6 +36,7 @@ public class AuthController {
              */
             return ResponseEntity.status(401). body("Error, verifica que hayas compartido todas las credenciales necesarias para iniciar sesión");
         }
+        //System.out.println(data.getCorreo() + " " + data.getContrasena());
         if (service.Login(data.getCorreo(), data.getContrasena())){
             addTokenCookie(response, data);
             return ResponseEntity.ok("Inicio de sesión exitoso");
@@ -48,7 +50,10 @@ public class AuthController {
      * @param data
      */
     private void addTokenCookie(HttpServletResponse response, @Valid UserDTO data) {
-        String token = jwtUtils.create(String.valueOf(data.getId()), data.getNombre());
+        String token = jwtUtils.create(
+                String.valueOf(data.getId()),
+                data.getCorreo(),
+                data.getNombreTipoUsuario());
         //Crear la cookie
         Cookie cookie = new Cookie("authToken", token); //Nombre y valor de la cookie
         cookie.setHttpOnly(true);
