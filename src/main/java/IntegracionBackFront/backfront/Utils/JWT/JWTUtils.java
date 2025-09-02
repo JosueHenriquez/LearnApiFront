@@ -45,10 +45,17 @@ public class JWTUtils {
                 .setId(id)                                              // ID único (JWT ID)
                 .setIssuedAt(now)                                       // Fecha de emisión
                 .setSubject(correo)                                     // Sujeto (usuario)
+                .claim("id", id)
+                .claim("rol", rol)
                 .setIssuer(issuer)                                      // Emisor del token
                 .setExpiration(expiracionMs >= 0 ? expiration : null)   // Expiración (si es >= 0)
                 .signWith(signingKey, SignatureAlgorithm.HS256)         // Firma con algoritmo HS256
                 .compact();                                             // Convierte a String compacto
+    }
+
+    public String extractRol(String token){
+        Claims claims = parseToken(token);
+        return claims.get("rol",String.class);
     }
 
     /**
@@ -84,22 +91,22 @@ public class JWTUtils {
         return parseClaims(jwt);
     }
 
-    /**
-     * Extraer token desde la solicitud
-     * @param request
-     * @return
-     */
-    public String extractTokenFromRequest(HttpServletRequest request){
-        Cookie[] cookies = request.getCookies();
-        if (cookies != null){
-            for (Cookie cookie : cookies){
-                if ("authToken".equals(cookie.getName())){
-                    return cookie.getValue();
-                }
-            }
-        }
-        return null;
-    }
+//    /**
+//     * Extraer token desde la solicitud
+//     * @param request
+//     * @return
+//     */
+//    public String extractTokenFromRequest(HttpServletRequest request){
+//        Cookie[] cookies = request.getCookies();
+//        if (cookies != null){
+//            for (Cookie cookie : cookies){
+//                if ("authToken".equals(cookie.getName())){
+//                    return cookie.getValue();
+//                }
+//            }
+//        }
+//        return null;
+//    }
 
     /**
      * Validación del token

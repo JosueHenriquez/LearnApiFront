@@ -19,17 +19,24 @@ public class AuthService {
     private UserRepository repo;
 
     public boolean Login(String correo, String contrasena){
-        System.out.println("Método login");
         Argon2Password objHash = new Argon2Password();
         Optional<UserEntity> list = repo.findByCorreo(correo).stream().findFirst();
         if (list.isPresent()){
             UserEntity usuario = list.get();
-            System.out.println("Usuario encontrado ID: " + usuario.getId() + ", email: " + usuario.getCorreo());
+            String nombreTipoUsuario = usuario.getTipoUsuario().getNombreTipo();
+            System.out.println("Usuario encontrado ID: " + usuario.getId() +
+                                ", email: " + usuario.getCorreo() +
+                                ", rol: " + nombreTipoUsuario);
             String HashDB = usuario.getContrasena();
             boolean verificado = objHash.VerifyPassword(HashDB, contrasena);
-            System.out.println("Verificación de contraseña: " + verificado);
             return verificado;
         }
         return false;
+    }
+
+    public Optional<UserEntity> obtenerUsuario(String email){
+        // Buscar usuario completo en la base de datos
+        Optional<UserEntity> userOpt = repo.findByCorreo(email);
+        return (userOpt != null) ? userOpt : null;
     }
 }

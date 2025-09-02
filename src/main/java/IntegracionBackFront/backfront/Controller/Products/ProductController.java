@@ -20,7 +20,6 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/products")
-@CrossOrigin
 public class ProductController {
 
     @Autowired
