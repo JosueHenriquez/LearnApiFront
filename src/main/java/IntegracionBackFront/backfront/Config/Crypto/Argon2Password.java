@@ -5,12 +5,12 @@ import de.mkammerer.argon2.Argon2Factory;
 import org.springframework.stereotype.Service;
 
 /**
- * 	Agregar dependencia para la utilizacion de Argon2id
- * 	<dependency>
- * 		<groupId>de.mkammerer</groupId>
- * 		<artifactId>argon2-jvm</artifactId>
- * 		<version>2.5</version>
- * 	</dependency>
+ * Agregar dependencia para la utilizacion de Argon2id
+ * <dependency>
+ * <groupId>de.mkammerer</groupId>
+ * <artifactId>argon2-jvm</artifactId>
+ * <version>2.5</version>
+ * </dependency>
  */
 @Service
 public class Argon2Password {

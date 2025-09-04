@@ -91,23 +91,6 @@ public class JWTUtils {
         return parseClaims(jwt);
     }
 
-//    /**
-//     * Extraer token desde la solicitud
-//     * @param request
-//     * @return
-//     */
-//    public String extractTokenFromRequest(HttpServletRequest request){
-//        Cookie[] cookies = request.getCookies();
-//        if (cookies != null){
-//            for (Cookie cookie : cookies){
-//                if ("authToken".equals(cookie.getName())){
-//                    return cookie.getValue();
-//                }
-//            }
-//        }
-//        return null;
-//    }
-
     /**
      * Validación del token
      * @param token

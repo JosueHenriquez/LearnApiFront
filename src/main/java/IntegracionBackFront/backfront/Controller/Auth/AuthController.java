@@ -34,8 +34,6 @@ public class AuthController {
 
     @PostMapping("/login")
     private ResponseEntity<String> login(@Valid @RequestBody UserDTO data, HttpServletResponse response) {
-        System.out.println("Método controller");
-
         if (data.getCorreo() == null || data.getCorreo().isBlank() ||
                 data.getContrasena() == null || data.getContrasena().isBlank()) {
             return ResponseEntity.status(401).body("Error: Credenciales incompletas");
@@ -86,7 +84,7 @@ public class AuthController {
                         ));
             }
 
-            // ✅ Manejar diferentes tipos de Principal
+            // Manejar diferentes tipos de Principal
             String username;
             Collection<? extends GrantedAuthority> authorities;
 
