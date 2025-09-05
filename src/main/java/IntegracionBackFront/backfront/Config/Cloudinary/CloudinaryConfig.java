@@ -1,8 +1,6 @@
 package IntegracionBackFront.backfront.Config.Cloudinary;
 
 import com.cloudinary.Cloudinary;
-import io.github.cdimascio.dotenv.Dotenv;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -21,9 +19,6 @@ public class CloudinaryConfig {
     // Crea un Bean de tipo Cloudinary que será inyectable en otros componentes de Spring
     @Bean
     public Cloudinary cloudinary() {
-        // Carga las variables de entorno desde un archivo .env usando la librería Dotenv
-        Dotenv dotenv = Dotenv.load();
-
         // Crea un Map para almacenar la configuración necesaria de Cloudinary
         Map<String, String> config = new HashMap<>();
 
