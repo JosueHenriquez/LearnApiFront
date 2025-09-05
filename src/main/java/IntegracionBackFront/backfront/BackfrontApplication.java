@@ -7,7 +7,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@ComponentScan(basePackages = "IntegracionBackFront.backfront")
 public class BackfrontApplication {
 
     public static void main(String[] args) {
