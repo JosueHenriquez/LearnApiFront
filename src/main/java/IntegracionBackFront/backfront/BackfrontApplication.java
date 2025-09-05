@@ -4,25 +4,43 @@ import IntegracionBackFront.backfront.Utils.Envars;
 import io.github.cdimascio.dotenv.Dotenv;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-public class BackfrontApplication{
+public class BackfrontApplication {
 
-	public static void main(String[] args) {
-		loadEnvVariables();
-		//Esta linea no se borra
-		SpringApplication.run(BackfrontApplication.class, args);
-	}
+    public static void main(String[] args) {
+        loadEnvironmentVariables();
+        SpringApplication.run(BackfrontApplication.class, args);
+    }
 
-	static void loadEnvVariables(){
-		//Codigo para cargar los valores del archivo .env sobre el archivo application.properties
-		Dotenv dotenv = Dotenv.configure()
-				.ignoreIfMissing()
-				.load();
+    static void loadEnvironmentVariables() {
+        // Verificar si estamos en Heroku (PORT es una variable que siempre existe en Heroku)
+        boolean isHeroku = System.getenv("PORT") != null;
 
-		//Carga de todas las variables en application.properties
-		dotenv.entries().forEach(entry ->
-				System.setProperty(entry.getKey(), entry.getValue())
-		);
-	}
+        if (!isHeroku) {
+            // Solo cargar .env en entorno local/desarrollo
+            try {
+                Dotenv dotenv = Dotenv.configure()
+                        .ignoreIfMissing()
+                        .load();
+
+                dotenv.entries().forEach(entry ->
+                        System.setProperty(entry.getKey(), entry.getValue())
+                );
+
+                System.out.println("Variables .env cargadas localmente");
+            } catch (Exception e) {
+                System.out.println("No se pudo cargar archivo .env (posiblemente en producción)");
+            }
+        } else {
+            System.out.println("Ejecutando en Heroku - usando variables de entorno del sistema");
+        }
+
+        // Asegurar que el puerto de Heroku tenga prioridad
+        String herokuPort = System.getenv("PORT");
+        if (herokuPort != null) {
+            System.setProperty("server.port", herokuPort);
+        }
+    }
 }

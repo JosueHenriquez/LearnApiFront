@@ -33,7 +33,7 @@ public class AuthController {
     private JWTUtils jwtUtils;
 
     @PostMapping("/login")
-    private ResponseEntity<String> login(@Valid @RequestBody UserDTO data, HttpServletResponse response) {
+    private ResponseEntity<String> login(@RequestBody UserDTO data, HttpServletResponse response) {
         if (data.getCorreo() == null || data.getCorreo().isBlank() ||
                 data.getContrasena() == null || data.getContrasena().isBlank()) {
             return ResponseEntity.status(401).body("Error: Credenciales incompletas");
