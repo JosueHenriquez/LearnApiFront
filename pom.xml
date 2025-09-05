@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.2.4</version>
+		<version>3.5.5-SNAPSHOT</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>IntegracionBackFront</groupId>
@@ -28,7 +28,7 @@
 		<url/>
 	</scm>
 	<properties>
-		<java.version>21</java.version>
+		<java.version>17</java.version>
 	</properties>
 
 	<dependencies>
@@ -78,6 +78,7 @@
 			<artifactId>cloudinary-http5</artifactId>
 			<version>2.0.0</version>
 		</dependency>
+
 		<dependency>
 			<groupId>com.cloudinary</groupId>
 			<artifactId>cloudinary-taglib</artifactId>
@@ -161,7 +162,7 @@
                 <version>3.3.2</version>
             </plugin>
 
-            <!-- Plugin para descargar webapp-runner -->
+            <!-- Plugin para descargar webapp-runner
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
@@ -185,7 +186,7 @@
                         </configuration>
                     </execution>
                 </executions>
-            </plugin>
+            </plugin> -->
 		</plugins>
 	</build>
 	<repositories>
