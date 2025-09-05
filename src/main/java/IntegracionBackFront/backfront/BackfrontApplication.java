@@ -1,7 +1,5 @@
 package IntegracionBackFront.backfront;
 
-import IntegracionBackFront.backfront.Utils.Envars;
-import io.github.cdimascio.dotenv.Dotenv;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
@@ -18,22 +16,7 @@ public class BackfrontApplication {
         // Verificar si estamos en Heroku (PORT es una variable que siempre existe en Heroku)
         boolean isHeroku = System.getenv("PORT") != null;
 
-        if (!isHeroku) {
-            // Solo cargar .env en entorno local/desarrollo
-            try {
-                Dotenv dotenv = Dotenv.configure()
-                        .ignoreIfMissing()
-                        .load();
-
-                dotenv.entries().forEach(entry ->
-                        System.setProperty(entry.getKey(), entry.getValue())
-                );
-
-                System.out.println("Variables .env cargadas localmente");
-            } catch (Exception e) {
-                System.out.println("No se pudo cargar archivo .env (posiblemente en producción)");
-            }
-        } else {
+        if (isHeroku) {
             System.out.println("Ejecutando en Heroku - usando variables de entorno del sistema");
             String port = System.getenv("PORT");
             if (port == null) {
