@@ -35,6 +35,11 @@ public class BackfrontApplication {
             }
         } else {
             System.out.println("Ejecutando en Heroku - usando variables de entorno del sistema");
+            String port = System.getenv("PORT");
+            if (port == null) {
+                port = "8080";
+            }
+            System.setProperty("server.port", port);
         }
 
         // Asegurar que el puerto de Heroku tenga prioridad
