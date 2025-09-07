@@ -50,7 +50,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.PUT, "/api/products/updateProduct/{id}").authenticated()
                         .requestMatchers(HttpMethod.DELETE, "/api/products/deleteProduct/{id}").authenticated()
 
-                        //ENDPOONT CON ROLES ESPECIFICOS
+                        //ENDPOINT CON ROLES ESPECIFICOS
                         .requestMatchers("/api/test/admin-only").hasRole("Administrador")
                         .requestMatchers("/api/test/cliente-only").hasRole("Cliente")
                         .anyRequest().authenticated())

@@ -7,6 +7,8 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 import org.springframework.web.cors.CorsConfigurationSource;
 
+import java.util.Arrays;
+
 
 @Configuration
 public class CorsConfig {
@@ -22,6 +24,7 @@ public class CorsConfig {
         config.addAllowedOrigin("http://localhost:8080"); // Vue
         config.addAllowedOrigin("http://localhost:4200"); // Angular
         config.addAllowedOrigin("http://localhost");      // Sin puerto
+        config.addAllowedOrigin("https://*.herokuapp.com");
 
         // Métodos HTTP permitidos
         config.addAllowedMethod("GET");
@@ -39,6 +42,12 @@ public class CorsConfig {
         config.addAllowedHeader("X-Requested-With");
         config.addAllowedHeader("Access-Control-Request-Method");
         config.addAllowedHeader("Access-Control-Request-Headers");
+        config.addAllowedHeader("Cookie");
+        config.addAllowedHeader("Set-Cookie");
+
+        config.setExposedHeaders(Arrays.asList(
+                "Set-Cookie", "Cookie", "Authorization", "Content-Disposition"
+        ));
 
         // Tiempo de cache para preflight requests
         config.setMaxAge(3600L);
@@ -56,6 +65,7 @@ public class CorsConfig {
         configuration.addAllowedOrigin("http://localhost:8080");
         configuration.addAllowedOrigin("http://localhost:4200");
         configuration.addAllowedOrigin("http://localhost");
+        configuration.addAllowedOrigin("https://*.herokuapp.com");
         configuration.addAllowedMethod("*");
         configuration.addAllowedHeader("*");
 
