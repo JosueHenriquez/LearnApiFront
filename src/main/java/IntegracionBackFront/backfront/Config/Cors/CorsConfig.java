@@ -59,6 +59,10 @@ public class CorsConfig {
         configuration.addAllowedMethod("*");
         configuration.addAllowedHeader("*");
 
+        configuration.addExposedHeader("Set-Cookie");
+        configuration.addExposedHeader("Cookie");
+        configuration.addExposedHeader("Authorization");
+
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;

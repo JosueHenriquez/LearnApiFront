@@ -53,7 +53,6 @@ public class AuthController {
      * @param
      */
     private void addTokenCookie(HttpServletResponse response, String correo) {
-        // Obtener el usuario completo de la base de datos
         Optional<UserEntity> userOpt = service.obtenerUsuario(correo);
 
         if (userOpt.isPresent()) {
@@ -61,15 +60,17 @@ public class AuthController {
             String token = jwtUtils.create(
                     String.valueOf(user.getId()),
                     user.getCorreo(),
-                    user.getTipoUsuario().getNombreTipo() // ← Usar el nombre real del tipo
+                    user.getTipoUsuario().getNombreTipo()
             );
 
-            Cookie cookie = new Cookie("authToken", token);
-            cookie.setHttpOnly(true);
-            cookie.setSecure(true);
-            cookie.setPath("/");
-            cookie.setMaxAge(86400);
-            response.addCookie(cookie);
+            String cookieValue = String.format(
+                    "authToken=%s; Path=/; HttpOnly; Secure; SameSite=None; MaxAge=86400; Domain=learnapifront-9de8a2348f9a.herokuapp.com",
+                    token
+            );
+
+            response.addHeader("Set-Cookie", cookieValue);
+            response.addHeader("Access-Control-Allow-Credentials", "true");
+            response.addHeader("Access-Control-Expose-Headers", "Set-Cookie");
         }
     }
 

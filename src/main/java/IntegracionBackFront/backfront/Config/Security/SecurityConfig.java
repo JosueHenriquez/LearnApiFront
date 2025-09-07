@@ -33,11 +33,24 @@ public class SecurityConfig {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource)) // ← Configura CORS aquí
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() // ← Permite preflight requests
-                        .requestMatchers(HttpMethod.POST,
-                                "/api/auth/login",
-                                "/api/auth/logout")
-                        .permitAll()
+                        .requestMatchers(HttpMethod.POST,"/api/auth/login").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/auth/logout").permitAll()
                         .requestMatchers("api/auth/me").authenticated()
+
+                        //ENDPOINTS CATEGORIA
+                        .requestMatchers(HttpMethod.GET, "/api/category/getDataCategory-paginado").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/api/category/getDataCategories").authenticated()
+                        .requestMatchers(HttpMethod.POST, "/api/category/newCategory").authenticated()
+                        .requestMatchers(HttpMethod.PUT, "/api/category/updateCategory/{id}").authenticated()
+                        .requestMatchers(HttpMethod.DELETE, "/api/category/deleteCategory/{id}").authenticated()
+
+                        //ENDPOINT PRODUCTOS
+                        .requestMatchers(HttpMethod.GET, "/api/products/getAllProducts").authenticated()
+                        .requestMatchers(HttpMethod.POST, "/api/products/newProduct").authenticated()
+                        .requestMatchers(HttpMethod.PUT, "/api/products/updateProduct/{id}").authenticated()
+                        .requestMatchers(HttpMethod.DELETE, "/api/products/deleteProduct/{id}").authenticated()
+
+                        //ENDPOONT CON ROLES ESPECIFICOS
                         .requestMatchers("/api/test/admin-only").hasRole("Administrador")
                         .requestMatchers("/api/test/cliente-only").hasRole("Cliente")
                         .anyRequest().authenticated())
