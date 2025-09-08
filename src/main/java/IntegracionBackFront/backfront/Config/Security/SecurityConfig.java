@@ -39,17 +39,16 @@ public class SecurityConfig {
 
                         //ENDPOINTS CATEGORIA
                         .requestMatchers(HttpMethod.GET, "/api/category/getDataCategory-paginado").authenticated()
-                        .requestMatchers(HttpMethod.GET, "/api/category/getDataCategories").authenticated()
-                        .requestMatchers(HttpMethod.POST, "/api/category/newCategory").authenticated()
-                        .requestMatchers(HttpMethod.PUT, "/api/category/updateCategory/{id}").authenticated()
-                        .requestMatchers(HttpMethod.DELETE, "/api/category/deleteCategory/{id}").authenticated()
+                        .requestMatchers(HttpMethod.POST, "/api/category/newCategory").hasAuthority("ROLE_Administrador")
+                        .requestMatchers(HttpMethod.PUT, "/api/category/updateCategory/{id}").hasAuthority("ROLE_Administrador")
+                        .requestMatchers(HttpMethod.DELETE, "/api/category/deleteCategory/{id}").hasAuthority("ROLE_Administrador")
 
                         //ENDPOINT PRODUCTOS
                         .requestMatchers(HttpMethod.GET, "/api/products/getAllProducts").authenticated()
-                        .requestMatchers(HttpMethod.POST, "/api/products/newProduct").authenticated()
-                        .requestMatchers(HttpMethod.PUT, "/api/products/updateProduct/{id}").authenticated()
-                        .requestMatchers(HttpMethod.DELETE, "/api/products/deleteProduct/{id}").authenticated()
-                        .requestMatchers(HttpMethod.POST, "/api/image/upload-to-folder").authenticated()
+                        .requestMatchers(HttpMethod.POST, "/api/products/newProduct").hasAnyAuthority("ROLE_Administrador", "ROLE_Almacenista")
+                        .requestMatchers(HttpMethod.PUT, "/api/products/updateProduct/{id}").hasAnyAuthority("ROLE_Administrador", "ROLE_Almacenista")
+                        .requestMatchers(HttpMethod.DELETE, "/api/products/deleteProduct/{id}").hasAnyAuthority("ROLE_Administrador", "ROLE_Almacenista")
+                        .requestMatchers(HttpMethod.POST, "/api/image/upload-to-folder").hasAnyAuthority("ROLE_Administrador", "ROLE_Almacenista")
 
                         //ENDPOINT CON ROLES ESPECIFICOS
                         .requestMatchers("/api/test/admin-only").hasAnyAuthority("ROLE_Administrador")
