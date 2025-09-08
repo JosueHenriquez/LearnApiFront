@@ -23,7 +23,6 @@ public class CorsConfig {
         config.addAllowedOrigin("http://localhost:3000"); // React
         config.addAllowedOrigin("http://localhost:8080"); // Vue
         config.addAllowedOrigin("http://localhost:4200"); // Angular
-        config.addAllowedOrigin("https://learnapifront-9de8a2348f9a.herokuapp.com");
 
         // Métodos HTTP permitidos
         config.addAllowedMethod("GET");

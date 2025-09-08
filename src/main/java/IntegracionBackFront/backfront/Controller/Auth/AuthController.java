@@ -64,12 +64,18 @@ public class AuthController {
             );
 
             String cookieValue = String.format(
-                    "authToken=%s; Path=/; HttpOnly; Secure; SameSite=None; MaxAge=86400; Domain=learnapifront-9de8a2348f9a.herokuapp.com",
+                    "authToken=%s; " +
+                            "Path=/; " +
+                            "HttpOnly; " +
+                            "Secure; " +
+                            "SameSite=None; " +
+                            "MaxAge=86400; " +
+                            "Domain=learnapifront-9de8a2348f9a.herokuapp.com",
                     token
             );
 
             response.addHeader("Set-Cookie", cookieValue);
-            response.addHeader("Access-Control-Allow-Credentials", "true");
+            //response.addHeader("Access-Control-Allow-Credentials", "true");
             response.addHeader("Access-Control-Expose-Headers", "Set-Cookie");
         }
     }
