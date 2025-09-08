@@ -15,16 +15,28 @@ import java.util.stream.Collectors;
 @RequestMapping("api/test")
 public class TestRole {
 
+    @GetMapping("/cliente-only")
+    @PreAuthorize("hasAuthority('ROLE_Cliente')")
+    public ResponseEntity<?> clienteEndPoint(){
+        return ResponseEntity.ok("Solo para clientes");
+    }
+
     @GetMapping("/admin-only")
     @PreAuthorize("hasAuthority('ROLE_Administrador')")
     public ResponseEntity<?> adminEndPoint(){
         return ResponseEntity.ok("Solo para administradores");
     }
 
-    @GetMapping("/cliente-only")
-    @PreAuthorize("hasAuthority('ROLE_Cliente')")
-    public ResponseEntity<?> clienteEndPoint(){
-        return ResponseEntity.ok("Solo para clientes");
+    @GetMapping("/almacenista-only")
+    @PreAuthorize("hasAuthority('ROLE_Almacenista')")
+    public ResponseEntity<?> AlmacenistaEndPoint(){
+        return ResponseEntity.ok("Solo para almacenistas");
+    }
+
+    @GetMapping("/admin-cliente-only")
+    @PreAuthorize("hasAnyAuthority('ROLE_Administrador', 'ROLE_Cliente')")
+    public ResponseEntity<?> clienteAdminEndPoint(){
+        return ResponseEntity.ok("Solo para administrador y clientes");
     }
 
     @GetMapping("/debug-auth")

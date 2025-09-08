@@ -53,6 +53,7 @@ public class SecurityConfig {
                         //ENDPOINT CON ROLES ESPECIFICOS
                         .requestMatchers("/api/test/admin-only").hasRole("Administrador")
                         .requestMatchers("/api/test/cliente-only").hasRole("Cliente")
+                        .requestMatchers("/api/test/admin-cliente-only").hasAnyRole("Cliente", "Administrador")
                         .anyRequest().authenticated())
                 .sessionManagement(sess -> sess
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
