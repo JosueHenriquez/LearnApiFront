@@ -51,9 +51,10 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.DELETE, "/api/products/deleteProduct/{id}").authenticated()
 
                         //ENDPOINT CON ROLES ESPECIFICOS
-                        .requestMatchers("/api/test/admin-only").hasAnyAuthority("Administrador")
-                        .requestMatchers("/api/test/cliente-only").hasAnyAuthority("Cliente")
-                        .requestMatchers("/api/test/admin-cliente-only").hasAnyAuthority("Cliente", "Administrador")
+                        .requestMatchers("/api/test/admin-only").hasAnyAuthority("ROLE_Administrador")
+                        .requestMatchers("/api/test/cliente-only").hasAnyAuthority("ROLE_Cliente")
+                        .requestMatchers("/api/test/almacenista-only").hasAnyAuthority("ROLE_Almacenista")
+                        .requestMatchers("/api/test/admin-cliente-only").hasAnyAuthority("ROLE_Cliente", "ROLE_Administrador")
                         .anyRequest().authenticated())
                 .sessionManagement(sess -> sess
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
