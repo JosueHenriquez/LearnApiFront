@@ -140,4 +140,17 @@ public class AuthController {
                     ));
         }
     }
+
+    @PostMapping("/logout")
+    public ResponseEntity<?> logout(HttpServletRequest request, HttpServletResponse response){
+        //1. Eliminar la cookie del cliente
+        Cookie cookie = new Cookie("authToken", null); //Nombre debe coincidir con la cookie del login
+        cookie.setHttpOnly(true);
+        cookie.setSecure(true);
+        cookie.setPath("/");
+        cookie.setMaxAge(0);
+        response.addCookie(cookie);
+
+        return ResponseEntity.ok().body("Sesión cerrada exitosamente");
+    }
 }
