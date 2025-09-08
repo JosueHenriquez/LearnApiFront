@@ -49,6 +49,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/api/products/newProduct").authenticated()
                         .requestMatchers(HttpMethod.PUT, "/api/products/updateProduct/{id}").authenticated()
                         .requestMatchers(HttpMethod.DELETE, "/api/products/deleteProduct/{id}").authenticated()
+                        .requestMatchers(HttpMethod.POST, "/api/image/upload-to-folder").authenticated()
 
                         //ENDPOINT CON ROLES ESPECIFICOS
                         .requestMatchers("/api/test/admin-only").hasAnyAuthority("ROLE_Administrador")
