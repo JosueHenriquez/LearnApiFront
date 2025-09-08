@@ -75,7 +75,7 @@ public class AuthController {
             );
 
             response.addHeader("Set-Cookie", cookieValue);
-            //response.addHeader("Access-Control-Allow-Credentials", "true");
+            //response.addHeader("Access-Control-Allow-Credentials", "true"); <-- ESTO NO DEBEN AGREGARLO
             response.addHeader("Access-Control-Expose-Headers", "Set-Cookie");
         }
     }
@@ -142,15 +142,21 @@ public class AuthController {
     }
 
     @PostMapping("/logout")
-    public ResponseEntity<?> logout(HttpServletRequest request, HttpServletResponse response){
-        //1. Eliminar la cookie del cliente
-        Cookie cookie = new Cookie("authToken", null); //Nombre debe coincidir con la cookie del login
-        cookie.setHttpOnly(true);
-        cookie.setSecure(true);
-        cookie.setPath("/");
-        cookie.setMaxAge(0);
-        response.addCookie(cookie);
+    public ResponseEntity<String> logout(HttpServletRequest request, HttpServletResponse response) {
+        // Crear cookie de expiración con SameSite=None
+        String cookieValue = "authToken=; Path=/; HttpOnly; Secure; SameSite=None; MaxAge=0; Domain=learnapifront-9de8a2348f9a.herokuapp.com";
 
-        return ResponseEntity.ok().body("Sesión cerrada exitosamente");
+        response.addHeader("Set-Cookie", cookieValue);
+        //response.addHeader("Access-Control-Allow-Credentials", "true"); <-- ESTO NO DEBEN AGREGARLO
+        response.addHeader("Access-Control-Expose-Headers", "Set-Cookie");
+
+        // También agregar headers CORS para la respuesta
+        String origin = request.getHeader("Origin");
+        if (origin != null &&
+                (origin.contains("localhost") || origin.contains("herokuapp.com"))) {
+            response.setHeader("Access-Control-Allow-Origin", origin);
+        }
+        return ResponseEntity.ok()
+                .body("Logout exitoso");
     }
 }
