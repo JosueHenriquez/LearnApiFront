@@ -20,6 +20,7 @@ public class CorsConfig {
 
         // Configuración esencial
         config.setAllowCredentials(true);
+        config.addAllowedOrigin("http://localhost");
         config.addAllowedOrigin("http://localhost:3000"); // React
         config.addAllowedOrigin("http://localhost:8080"); // Vue
         config.addAllowedOrigin("http://localhost:4200"); // Angular
