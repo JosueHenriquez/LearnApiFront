@@ -64,6 +64,7 @@ public class CorsConfig {
         configuration.addAllowedOrigin("http://localhost:3000");
         configuration.addAllowedOrigin("http://localhost:8080");
         configuration.addAllowedOrigin("http://localhost:4200");
+        configuration.addAllowedOrigin("https://localhost");
         configuration.addAllowedOrigin("http://localhost");
         configuration.addAllowedOrigin("https://*.herokuapp.com");
         configuration.addAllowedMethod("*");
