@@ -35,7 +35,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() // ← Permite preflight requests
                         .requestMatchers(HttpMethod.POST,"/api/auth/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/auth/logout").permitAll()
-                        .requestMatchers("api/auth/me").authenticated()
+                        .requestMatchers("/api/auth/me").authenticated()
 
                         //ENDPOINTS CATEGORIA
                         .requestMatchers(HttpMethod.GET, "/api/category/getDataCategory-paginado").authenticated()
