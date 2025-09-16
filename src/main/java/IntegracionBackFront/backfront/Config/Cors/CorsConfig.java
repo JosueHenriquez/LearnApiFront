@@ -25,6 +25,7 @@ public class CorsConfig {
         config.addAllowedOrigin("http://localhost:3000"); // React
         config.addAllowedOrigin("http://localhost:8080"); // Vue
         config.addAllowedOrigin("http://localhost:4200"); // Angular
+        config.addAllowedOrigin("https://learn-api-steel.vercel.app/");
 
         // Métodos HTTP permitidos
         config.addAllowedMethod("GET");
@@ -67,6 +68,7 @@ public class CorsConfig {
         configuration.addAllowedOrigin("https://localhost");
         configuration.addAllowedOrigin("http://localhost");
         configuration.addAllowedOrigin("https://*.herokuapp.com");
+        configuration.addAllowedOrigin("https://learn-api-steel.vercel.app/");
         configuration.addAllowedMethod("*");
         configuration.addAllowedHeader("*");
 
