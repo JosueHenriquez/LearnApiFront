@@ -50,6 +50,12 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.DELETE, "/api/products/deleteProduct/{id}").hasAnyAuthority("ROLE_Administrador", "ROLE_Almacenista")
                         .requestMatchers(HttpMethod.POST, "/api/image/upload-to-folder").hasAnyAuthority("ROLE_Administrador", "ROLE_Almacenista")
 
+                        //ENDPOINTS USUARIOS
+                        .requestMatchers(HttpMethod.GET, "/api/users/getDataUsers").authenticated()
+                        .requestMatchers(HttpMethod.POST, "/api/users/newUser").authenticated()
+                        .requestMatchers(HttpMethod.PUT, "/api/users/updateUser/{id}").authenticated()
+                        .requestMatchers(HttpMethod.DELETE, "/api/users/deleteUser/{id}").authenticated()
+
                         //ENDPOINT CON ROLES ESPECIFICOS
                         .requestMatchers("/api/test/admin-only").hasAnyAuthority("ROLE_Administrador")
                         .requestMatchers("/api/test/cliente-only").hasAnyAuthority("ROLE_Cliente")
